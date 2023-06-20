@@ -22,6 +22,11 @@ app.get("/imagegpt", (req, res) => {
   res.sendFile(path.join(__dirname, "./dist/index.html"));
 });
 
+app.get("/imagegpt/uploads/:name", (req, res) => {
+  const { name } = req.params;
+  res.sendFile(path.join(__dirname, "./uploads/" + name));
+});
+
 const upload = multer({ dest: "./uploads/" });
 app.post("/imagegpt/ocr", upload.single("avatar"), (req, res) => {
   console.log(req.file.path);
