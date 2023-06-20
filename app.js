@@ -16,7 +16,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
-app.use(express.static("./dist"));
+app.use(express.static(path.join(__dirname, "dist"))); //  "public" off of current is root
 
 app.get("/imagegpt", (req, res) => {
   res.sendFile(path.join(__dirname, "./dist/index.html"));
