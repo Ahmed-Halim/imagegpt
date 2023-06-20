@@ -18,12 +18,12 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static("dist"));
 
-app.get("/", (req, res) => {
+app.get("/imagegpt", (req, res) => {
   res.sendFile(path.join(__dirname, "./dist/index.html"));
 });
 
 const upload = multer({ dest: "./uploads/" });
-app.post("/ocr", upload.single("avatar"), (req, res) => {
+app.post("/imagegpt/ocr", upload.single("avatar"), (req, res) => {
   tesseract
     .recognize(req.file.path, {
       lang: "eng",
@@ -38,7 +38,7 @@ app.post("/ocr", upload.single("avatar"), (req, res) => {
     });
 });
 
-app.post("/gpt", async (req, res) => {
+app.post("/imagegpt/gpt", async (req, res) => {
   const question = req.body.question;
   const prompt = req.body.prompt;
   const reqBody = {
