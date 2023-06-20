@@ -24,25 +24,29 @@ app.get("/imagegpt", (req, res) => {
 
 const upload = multer({ dest: "./uploads/" });
 app.post("/imagegpt/ocr", upload.single("avatar"), (req, res) => {
-  res.send("hi");
-  //   tesseract
-  //     .recognize(req.file.path, {
-  //       lang: "eng",
-  //       oem: 1,
-  //       psm: 3,
-  //     })
-  //     .then((text) => {
-  //       res.send(text);
-  //     })
-  //     .catch((error) => {
-  //       res.send("err");
-  //     });
+  console.log(req.file.path);
+  tesseract
+    .recognize(req.file.path, {
+      lang: "eng",
+      oem: 1,
+      psm: 3,
+    })
+    .then((text) => {
+      res.send(text);
+    })
+    .catch((error) => {
+      res.send("err");
+    });
 });
 
 app.post("/imagegpt/gpt", async (req, res) => {
   try {
     const question = req.body.question;
     const prompt = req.body.prompt;
+    if (!question || !prompt) {
+      res.send("empty request");
+      return;
+    }
     const reqBody = {
       model: "gpt-3.5-turbo",
       messages: [
