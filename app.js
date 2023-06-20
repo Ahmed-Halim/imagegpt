@@ -24,18 +24,19 @@ app.get("/imagegpt", (req, res) => {
 
 const upload = multer({ dest: "./uploads/" });
 app.post("/imagegpt/ocr", upload.single("avatar"), (req, res) => {
-  tesseract
-    .recognize(req.file.path, {
-      lang: "eng",
-      oem: 1,
-      psm: 3,
-    })
-    .then((text) => {
-      res.send(text);
-    })
-    .catch((error) => {
-      res.send("err");
-    });
+  res.send("hi");
+  //   tesseract
+  //     .recognize(req.file.path, {
+  //       lang: "eng",
+  //       oem: 1,
+  //       psm: 3,
+  //     })
+  //     .then((text) => {
+  //       res.send(text);
+  //     })
+  //     .catch((error) => {
+  //       res.send("err");
+  //     });
 });
 
 app.post("/imagegpt/gpt", async (req, res) => {
