@@ -39,21 +39,25 @@ app.post("/imagegpt/ocr", upload.single("avatar"), (req, res) => {
 });
 
 app.post("/imagegpt/gpt", async (req, res) => {
-  const question = req.body.question;
-  const prompt = req.body.prompt;
-  const reqBody = {
-    model: "gpt-3.5-turbo",
-    messages: [
-      {
-        role: "system",
-        content: prompt,
-      },
-      { role: "user", content: question },
-    ],
-  };
-  const completion = await openai.createChatCompletion(reqBody);
-  const answer = completion.data.choices[0].message.content;
-  res.send(answer);
+  try {
+    const question = req.body.question;
+    const prompt = req.body.prompt;
+    const reqBody = {
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          role: "system",
+          content: prompt,
+        },
+        { role: "user", content: question },
+      ],
+    };
+    const completion = await openai.createChatCompletion(reqBody);
+    const answer = completion.data.choices[0].message.content;
+    res.send(answer);
+  } catch (err) {
+    res.send("error with openai");
+  }
 });
 
 app.listen(3000, () => {
