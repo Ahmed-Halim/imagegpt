@@ -31,7 +31,7 @@ const upload = multer({ dest: "./uploads/" });
 app.post("/imagegpt/ocr", upload.single("avatar"), (req, res) => {
   console.log(req.file.path);
   tesseract
-    .recognize("https://tesseract.projectnaptha.com/img/eng_bw.png", {
+    .recognize(req.file.path, {
       lang: "eng",
       oem: 1,
       psm: 3,
