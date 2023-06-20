@@ -40,7 +40,7 @@ app.post("/imagegpt/ocr", upload.single("avatar"), (req, res) => {
       res.send(text);
     })
     .catch((error) => {
-      res.send("err");
+      res.send(JSON.stringify(error));
     });
 });
 
