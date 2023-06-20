@@ -31,7 +31,7 @@ const upload = multer({ dest: "./uploads/" });
 app.post("/imagegpt/ocr", upload.single("avatar"), (req, res) => {
   console.log(req.file.path);
   tesseract
-    .recognize(req.file.path, {
+    .recognize("https://wordmatic.ai/imagegpt/" + req.file.path, {
       lang: "eng",
       oem: 1,
       psm: 3,
@@ -40,7 +40,7 @@ app.post("/imagegpt/ocr", upload.single("avatar"), (req, res) => {
       res.send(text);
     })
     .catch((error) => {
-      res.send(JSON.stringify(error));
+      res.send("error with ocr");
     });
 });
 
